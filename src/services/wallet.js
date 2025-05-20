@@ -256,6 +256,7 @@ export const getTransactionsByPeriod = async (userId, year, month) => {
         date: { $gte: startDate, $lte: endDate },
       },
     },
+
     {
       $facet: {
         summary: [
@@ -276,12 +277,14 @@ export const getTransactionsByPeriod = async (userId, year, month) => {
               as: 'category',
             },
           },
+
           {
             $unwind: {
               path: '$category',
               preserveNullAndEmptyArrays: true,
             },
           },
+
           {
             $group: {
               _id: {
@@ -292,6 +295,7 @@ export const getTransactionsByPeriod = async (userId, year, month) => {
               total: { $sum: '$sum' },
             },
           },
+
           {
             $project: {
               _id: 0,
@@ -330,10 +334,16 @@ export const getTransactionsByPeriod = async (userId, year, month) => {
       categoryExpenses[cat.categoryName] = parseFloat(cat.total.toFixed(2));
     });
 
+  const categoryIncomes = {};
+  stats.categories
+    .filter((cat) => cat.type === 'income' && cat.total > 0 && cat.categoryName)
+    .forEach((cat) => {
+      categoryIncomes[cat.categoryName] = parseFloat(cat.total.toFixed(2));
+    });
+
   const periodTransactionsSum = parseFloat(
     (Math.abs(totalIncome) + Math.abs(totalExpense)).toFixed(2),
   );
-
   const periodTransactionsCount =
     stats.transactionsCount.length > 0 ? stats.transactionsCount[0].count : 0;
 
@@ -343,7 +353,8 @@ export const getTransactionsByPeriod = async (userId, year, month) => {
     totalIncome: parseFloat(totalIncome.toFixed(2)), // Загальна сума доходів за період
     totalExpense: parseFloat(totalExpense.toFixed(2)), // Загальна сума витрат за період
     categoryExpenses, // Витрати по категоріях за період
-    periodTransactionsSum: periodTransactionsSum, // Загальна сума всіх транзакцій за період (абсолютне значення)
+    categoryIncomes, // ДОХОДИ ПО КАТЕГОРІЯХ за період
+    periodTransactionsSum: periodTransactionsSum, // Загальна сума всіх транзакцій за період
     periodTransactionsCount: periodTransactionsCount, // Загальна кількість транзакцій за період
   };
 

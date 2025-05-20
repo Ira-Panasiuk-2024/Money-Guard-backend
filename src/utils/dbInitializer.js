@@ -1,6 +1,5 @@
 import { CategoriesCollection } from '../db/models/Categories.js';
-
-import { DEFAULT_CATEGORIES } from '../constants/index.js';
+import { INCOME_CATEGORIES, EXPENSE_CATEGORIES } from '../constants/index.js';
 
 export const initializeDefaultCategories = async () => {
   try {
@@ -11,14 +10,18 @@ export const initializeDefaultCategories = async () => {
 
       const categoryPromises = [];
 
-      categoryPromises.push(
-        CategoriesCollection.create({
-          type: 'income',
-          name: 'Income',
-        }),
-      );
+      // Додаємо всі категорії доходів з константи INCOME_CATEGORIES
+      INCOME_CATEGORIES.forEach((name) => {
+        categoryPromises.push(
+          CategoriesCollection.create({
+            type: 'income',
+            name,
+          }),
+        );
+      });
 
-      DEFAULT_CATEGORIES.forEach((name) => {
+      // Додаємо всі категорії витрат з константи EXPENSE_CATEGORIES
+      EXPENSE_CATEGORIES.forEach((name) => {
         categoryPromises.push(
           CategoriesCollection.create({
             type: 'expense',
