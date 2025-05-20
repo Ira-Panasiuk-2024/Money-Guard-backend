@@ -20,15 +20,15 @@ const PORT = Number(getEnvVar('PORT', '9292'));
 export const startServer = () => {
   const app = express();
   app.use(express.json());
-  // const corsOptions = {
-  //   origin: [
-  //     'http://localhost:5173',
-  //     'https://money-guard-frontend-five.vercel.app/',
-  //   ],
-  //   credentials: true,
-  // };
-  // app.use(cors(corsOptions));
-  app.use(cors());
+  const corsOptions = {
+    origin: [
+      'http://localhost:5173',
+      'https://money-guard-frontend-five.vercel.app',
+    ],
+    credentials: true,
+  };
+  app.use(cors(corsOptions));
+  // app.use(cors());
   app.use(cookieParser());
 
   app.use('/transactions', transactionsRouter);
