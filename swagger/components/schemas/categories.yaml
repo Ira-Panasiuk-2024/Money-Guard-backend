@@ -1,0 +1,14 @@
+type: object
+required:
+  - _id
+  - name
+properties:
+  _id:
+    description: Unique identifier for the category. Automatically generated MongoDB ObjectId.
+    type: string
+    pattern: '^[0-9a-fA-F]{24}$'
+    example: 680a680d4d3d230f60d30fc1
+  name:
+    description: Descriptive name of the category (e.g. "Main expenses", "Salary").
+    type: string
+    example: Main expenses

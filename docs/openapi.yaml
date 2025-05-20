@@ -1,0 +1,72 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Money Guard App
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: API documentation for Money Guard App — track your finances with ease.
+
+tags:
+  - name: Auth
+    description: Endpoints for user registration, login, and logout.
+  - name: User
+    description: Endpoints for retrieving or updating the authenticated user's profile.
+  - name: Transactions
+    description: Endpoints for managing income and expense transactions.
+  - name: Categories
+    description: Endpoints for viewing available saving and spending categories.
+
+servers:
+  - url: https://money-guard-backend-3e63.onrender.com
+    description: Production server
+  - url: http://localhost:9292
+    description: Local development server
+
+paths:
+  /auth/register:
+    post:
+      $ref: ../swagger/path/auth/register.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/path/auth/login.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/path/auth/logout.yaml
+
+  /users/current:
+    get:
+      $ref: ../swagger/path/user/get.yaml
+    patch:
+      $ref: ../swagger/path/user/patch.yaml
+
+  /transactions:
+    get:
+      $ref: ../swagger/path/wallet/transactions/get.yaml
+    post:
+      $ref: ../swagger/path/wallet/transactions/post.yaml
+  /transactions/{id}:
+    patch:
+      $ref: ../swagger/path/wallet/transactions/{id}/patch.yaml
+    delete:
+      $ref: ../swagger/path/wallet/transactions/{id}/delete.yaml
+
+  /transactions/statistics:
+    get:
+      $ref: ../swagger/path/wallet/statistics/get.yaml
+
+  /categories:
+    get:
+      $ref: ../swagger/path/categories/get.yaml
+
+components:
+  schemas:
+    user:
+      $ref: ../swagger/components/schemas/user.yaml
+    transactions:
+      $ref: ../swagger/components/schemas/transactions.yaml
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
