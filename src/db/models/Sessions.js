@@ -7,7 +7,7 @@ const sessionsSchema = new Schema(
     tokenValidUntil: {
       type: Date,
       required: true,
-      expires: 0,
+      expires: 3600,
     },
   },
   {
