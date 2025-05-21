@@ -1,7 +1,7 @@
 import { CategoriesCollection } from '../db/models/Categories.js';
 
 export const getAllCategories = async (userId, type = null) => {
-  const query = { owner: userId };
+  const query = {};
 
   if (type) {
     query.type = type;
