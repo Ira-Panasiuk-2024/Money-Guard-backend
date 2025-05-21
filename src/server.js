@@ -24,12 +24,13 @@ export const startServer = () => {
     origin: [
       'http://localhost:5173',
       'https://money-guard-frontend-five.vercel.app',
-      'https://money-guard-frontend-8eqxgheac-ira-panasiuks-projects.vercel.app',
+      // 'https://money-guard-frontend-8eqxgheac-ira-panasiuks-projects.vercel.app',
+      'https://money-guard-frontend-6c301qi0i-ira-panasiuks-projects.vercel.app/',
     ],
     credentials: true,
   };
   app.use(cors(corsOptions));
-  
+
   app.use(cookieParser());
 
   app.use('/transactions', transactionsRouter);
