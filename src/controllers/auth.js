@@ -21,13 +21,17 @@ export const registerUserController = async (req, res) => {
   const { user: newUser, token } = await createUser(req.body);
 
   res.status(201).json({
-    user: {
-      name: newUser.name,
-      email: newUser.email,
-      balance: newUser.balance,
-      photo: newUser.photo,
+    success: true,
+    data: {
+      user: {
+        name: newUser.name,
+        email: newUser.email,
+        balance: newUser.balance,
+        photo: newUser.photo,
+      },
+      token,
     },
-    token,
+    message: 'User registered successfully',
   });
 };
 
@@ -47,13 +51,17 @@ export const loginUserController = async (req, res) => {
   const token = await createSession(user._id, user.email);
 
   res.status(200).json({
-    user: {
-      name: user.name,
-      email: user.email,
-      balance: user.balance,
-      photo: user.photo,
+    success: true,
+    data: {
+      user: {
+        name: user.name,
+        email: user.email,
+        balance: user.balance,
+        photo: user.photo,
+      },
+      token,
     },
-    token,
+    message: 'Login successful',
   });
 };
 

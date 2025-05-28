@@ -8,12 +8,13 @@ import {
 
 import { registerUserSchema, loginUserSchema } from '../validation/auth.js';
 
+import { authenticate } from '../middlewares/authenticate.js';
+
 import { validateBody } from '../middlewares/validateBody.js';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const authRouter = Router();
-
 
 authRouter.post(
   '/register',
@@ -27,6 +28,6 @@ authRouter.post(
   ctrlWrapper(loginUserController),
 );
 
-authRouter.post('/logout', ctrlWrapper(logoutUserController));
+authRouter.post('/logout', authenticate, ctrlWrapper(logoutUserController));
 
 export default authRouter;
