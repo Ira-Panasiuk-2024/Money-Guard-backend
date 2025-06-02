@@ -25,28 +25,17 @@ export const getTransactions = async (
   }
   const skip = (page - 1) * perPage;
 
-  // Логування перед запитами
-  console.log(`Getting transactions for userId: ${userId}`);
-  console.log(`Page: ${page}, PerPage: ${perPage}, Skip: ${skip}`);
-
   const [transactions, totalCount] = await Promise.all([
-    TransactionsCollection.find({ userId }) // Важливо, що фільтруємо по userId
+    TransactionsCollection.find({ userId })
       .sort({ date: sortOrder === 'asc' ? 1 : -1 })
       .skip(skip)
       .limit(perPage)
       .select(EXCLUDE_FIELDS)
       .populate('categoryId', 'name'),
-    TransactionsCollection.countDocuments({ userId }), // Важливо, що рахуємо по userId
+    TransactionsCollection.countDocuments({ userId }),
   ]);
 
-  // Логування результатів
-  console.log(`Found ${transactions.length} transactions for this page.`);
-  console.log(`Total count for userId: ${totalCount}`);
-
   const pageInfo = calculatePaginationData(page, perPage, totalCount);
-
-  // Логування pageInfo
-  console.log('Pagination Info:', pageInfo);
 
   return {
     transactions,
