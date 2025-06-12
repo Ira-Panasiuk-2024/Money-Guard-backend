@@ -6,7 +6,11 @@ import {
   findUserByEmail,
   createUser,
   createSession,
+  verifyUser,
+  generateResetToken,
+  resetUserPassword,
 } from '../services/auth.js';
+
 import { SessionsCollection } from '../db/models/Sessions.js';
 
 export const registerUserController = async (req, res) => {
@@ -28,10 +32,11 @@ export const registerUserController = async (req, res) => {
         email: newUser.email,
         balance: newUser.balance,
         photo: newUser.photo,
+        isVerified: newUser.isVerified,
       },
       token,
     },
-    message: 'User registered successfully',
+    message: 'User registered successfully. Please verify your email.',
   });
 };
 
@@ -40,6 +45,10 @@ export const loginUserController = async (req, res) => {
 
   if (!user) {
     throw createHttpError(401, 'Email or password is incorrect');
+  }
+
+  if (!user.isVerified) {
+    throw createHttpError(403, 'Please verify your email to log in');
   }
 
   const isPwdEqual = await bcrypt.compare(req.body.password, user.password);
@@ -58,6 +67,7 @@ export const loginUserController = async (req, res) => {
         email: user.email,
         balance: user.balance,
         photo: user.photo,
+        isVerified: user.isVerified,
       },
       token,
     },
@@ -69,4 +79,66 @@ export const logoutUserController = async (req, res) => {
   await logoutUser(req.user._id);
 
   res.status(204).send();
+};
+
+export const verifyEmailController = async (req, res) => {
+  const { token } = req.query;
+
+  if (!token) {
+    throw createHttpError(400, 'Verification token is missing');
+  }
+
+  const user = await verifyUser(token);
+
+  if (!user) {
+    throw createHttpError(404, 'Invalid or expired verification token');
+  }
+
+  res.status(200).json({
+    success: true,
+    message: 'Email successfully verified!',
+  });
+};
+
+export const requestPasswordResetController = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    throw createHttpError(400, 'Email is required');
+  }
+
+  const emailSent = await generateResetToken(email);
+
+  if (!emailSent) {
+    return res.status(200).json({
+      success: true,
+      message:
+        'If an account with that email exists, a password reset link has been sent.',
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    message: 'Password reset link sent to your email.',
+  });
+};
+
+export const resetPasswordController = async (req, res) => {
+  const { token } = req.query;
+  const { newPassword } = req.body;
+
+  if (!token || !newPassword) {
+    throw createHttpError(400, 'Token and new password are required');
+  }
+
+  const passwordReset = await resetUserPassword(token, newPassword);
+
+  if (!passwordReset) {
+    throw createHttpError(400, 'Invalid or expired reset token.');
+  }
+
+  res.status(200).json({
+    success: true,
+    message: 'Password has been reset successfully.',
+  });
 };

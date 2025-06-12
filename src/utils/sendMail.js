@@ -2,8 +2,8 @@ import nodemailer from 'nodemailer';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 
-import { getEnvVar } from './getEnvVar';
-import { NODEMAILER } from './getEnvVar';
+import { getEnvVar } from './getEnvVar.js';
+import { NODEMAILER } from '../constants/index.js';
 
 const transporter = nodemailer.createTransport({
   host: getEnvVar(NODEMAILER.EMAIL_HOST),
