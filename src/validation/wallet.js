@@ -10,7 +10,7 @@ export const createTransactionsSchema = Joi.object({
     'any.only': 'Type should be either "income" or "expense"',
   }),
   categoryId: Joi.string()
-    .pattern(/^[0-9a-fA-F]{24}$/) // Перевірка на формат ObjectId
+    .pattern(/^[0-9a-fA-F]{24}$/)
     .required()
     .messages({
       'any.required': 'CategoryId is required',
@@ -35,7 +35,7 @@ export const updateTransactionsSchema = Joi.object({
     'any.only': 'Type should be either "income" or "expense"',
   }),
   categoryId: Joi.string()
-    .pattern(/^[0-9a-fA-F]{24}$/) // Перевірка на формат ObjectId
+    .pattern(/^[0-9a-fA-F]{24}$/)
     .messages({
       'string.base': 'CategoryId must be a string',
       'string.pattern.base': 'CategoryId must be a valid ObjectId format',

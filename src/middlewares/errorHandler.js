@@ -1,29 +1,9 @@
-// import { HttpError } from 'http-errors';
-
-// export const errorHandler = (err, req, res, next) => {
-//   if (err instanceof HttpError) {
-//     res.status(err.status).json({
-//       status: err.status,
-//       message: err.message,
-//       errors: err.errors,
-//     });
-//     return;
-//   }
-
-//   res.status(500).json({
-//     status: 500,
-//     message: 'Something went wrong',
-//     data: err.message,
-//   });
-// };
-
 import { HttpError } from 'http-errors';
 import multer from 'multer';
 
 export const errorHandler = (err, req, res, next) => {
-  // Обробка помилок Multer
   if (err instanceof multer.MulterError) {
-    let statusCode = 400; // За замовчуванням поганий запит
+    let statusCode = 400;
     let message = 'File upload error';
 
     switch (err.code) {
@@ -59,8 +39,6 @@ export const errorHandler = (err, req, res, next) => {
     return;
   }
 
-  // Обробка помилок, які передаються з 'fileFilter' у Multer
-  // Це помилка, яку ви самі створюєте: new Error('Invalid file type. Only image files are allowed.')
   if (err.message === 'Invalid file type. Only image files are allowed.') {
     res.status(400).json({
       status: 400,
@@ -69,7 +47,6 @@ export const errorHandler = (err, req, res, next) => {
     return;
   }
 
-  // Обробка помилок HttpError
   if (err instanceof HttpError) {
     res.status(err.status).json({
       status: err.status,
@@ -79,8 +56,7 @@ export const errorHandler = (err, req, res, next) => {
     return;
   }
 
-  // Загальна обробка всіх інших помилок
-  console.error(err); // Важливо логувати невідомі помилки для налагодження
+  console.error(err);
   res.status(500).json({
     status: 500,
     message: 'Something went wrong',

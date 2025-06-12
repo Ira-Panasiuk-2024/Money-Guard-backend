@@ -351,14 +351,14 @@ export const getTransactionsByPeriod = async (userId, year, month) => {
     stats.transactionsCount.length > 0 ? stats.transactionsCount[0].count : 0;
 
   const response = {
-    totalBalance: parseFloat(currentBalance.toFixed(2)), // Поточний загальний баланс користувача
-    periodIncomeOutcome: parseFloat((totalIncome - totalExpense).toFixed(2)), // Різниця між доходами та витратами за період
-    totalIncome: parseFloat(totalIncome.toFixed(2)), // Загальна сума доходів за період
-    totalExpense: parseFloat(totalExpense.toFixed(2)), // Загальна сума витрат за період
-    categoryExpenses, // Витрати по категоріях за період
-    categoryIncomes, // ДОХОДИ ПО КАТЕГОРІЯХ за період
-    periodTransactionsSum: periodTransactionsSum, // Загальна сума всіх транзакцій за період
-    periodTransactionsCount: periodTransactionsCount, // Загальна кількість транзакцій за період
+    totalBalance: parseFloat(currentBalance.toFixed(2)),
+    periodIncomeOutcome: parseFloat((totalIncome - totalExpense).toFixed(2)),
+    totalIncome: parseFloat(totalIncome.toFixed(2)),
+    totalExpense: parseFloat(totalExpense.toFixed(2)),
+    categoryExpenses,
+    categoryIncomes,
+    periodTransactionsSum: periodTransactionsSum,
+    periodTransactionsCount: periodTransactionsCount,
   };
 
   return response;

@@ -10,7 +10,6 @@ export const initializeDefaultCategories = async () => {
 
       const categoryPromises = [];
 
-      // Додаємо всі категорії доходів з константи INCOME_CATEGORIES
       INCOME_CATEGORIES.forEach((name) => {
         categoryPromises.push(
           CategoriesCollection.create({
@@ -20,7 +19,6 @@ export const initializeDefaultCategories = async () => {
         );
       });
 
-      // Додаємо всі категорії витрат з константи EXPENSE_CATEGORIES
       EXPENSE_CATEGORIES.forEach((name) => {
         categoryPromises.push(
           CategoriesCollection.create({
