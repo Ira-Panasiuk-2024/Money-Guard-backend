@@ -19,7 +19,26 @@ const usersSchema = new Schema(
       type: Number,
       default: 0,
     },
-    photo: { type: String, default: null },
+    photo: {
+      type: String,
+      default: null,
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      default: null,
+    },
+    resetToken: {
+      type: String,
+      default: null,
+    },
+    resetTokenExpires: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -30,6 +49,9 @@ const usersSchema = new Schema(
 usersSchema.methods.toJSON = function () {
   const obj = this.toObject();
   delete obj.password;
+  delete obj.verificationToken;
+  delete obj.resetToken;
+  delete obj.resetTokenExpires;
   return obj;
 };
 
