@@ -55,6 +55,7 @@ requestBody:
             type: string
             description: Optional comment for the transaction.
             example: Products in the supermarket
+            default: ''
 responses:
   '200':
     description: 'Transaction successfully updated.'
@@ -103,7 +104,7 @@ responses:
                   description: Optional comment or note related to the transaction. Can be left empty.
                   type: string
                   example: Products in the supermarket
-                  default: ' '
+                  default: ''
 
             balance:
               type: number

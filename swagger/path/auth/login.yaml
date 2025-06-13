@@ -54,6 +54,9 @@ responses:
                   type: string
                   format: uri
                   example: 'https://res.cloudinary.com/dlejcfotr/image/upload/v1743263889/cl4t7hdyrzxbzxhqeh5i.jpg'
+                isVerified:
+                  type: boolean
+                  example: false
             token:
               type: string
               example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
@@ -61,6 +64,8 @@ responses:
     $ref: '../../components/responses/400.yaml'
   '401':
     $ref: '../../components/responses/401.yaml'
+  '403':
+    $ref: ../../components/responses/403.yaml
   '404':
     $ref: '../../components/responses/404.yaml'
   '500':

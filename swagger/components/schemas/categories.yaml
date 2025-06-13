@@ -2,6 +2,7 @@ type: object
 required:
   - _id
   - name
+  - type
 properties:
   _id:
     description: Unique identifier for the category. Automatically generated MongoDB ObjectId.
@@ -12,3 +13,23 @@ properties:
     description: Descriptive name of the category (e.g. "Main expenses", "Salary").
     type: string
     example: Main expenses
+  type:
+    description: Type of the category. Allowed values are 'income' or 'expense'.
+    type: string
+    enum: ['income', 'expense']
+    default: expense
+    example: expense
+  createdAt:
+    description: |
+      The date and time when the category was created. Automatically set by the database.
+    type: string
+    format: date-time
+    readOnly: true
+    example: '2025-06-10T12:00:00Z'
+  updatedAt:
+    description: |
+      The date and time of the last update to the category. Automatically updated by the database when any field changes.
+    type: string
+    format: date-time
+    readOnly: true
+    example: '2025-06-11T13:45:00Z'

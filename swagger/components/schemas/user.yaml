@@ -4,6 +4,7 @@ required:
   - name
   - email
   - password
+  - isVerified
 properties:
   _id:
     description: |
@@ -50,3 +51,39 @@ properties:
     type: string
     format: uri
     example: 'https://res.cloudinary.com/dlejcfotr/image/upload/v1743263889/cl4t7hdyrzxbzxhqeh5i.jpg'
+  isVerified:
+    description: |
+      The verification status of the user's account. Defaults to false. Indicates whether the user has confirmed their email address.
+    type: boolean
+    default: false
+    example: false
+  verificationToken:
+    description: |
+      A token used for email verification. Generated upon registration and used to confirm the account. Defaults to null.
+    type: [string, "null"]
+    example: 'some-random-verification-token-12345'
+  resetToken:
+    description: |
+      A token used for password reset. Generated upon request for a password reset. Defaults to null.
+    type: [string, "null"]
+    example: 'some-random-reset-token-67890'
+  resetTokenExpires:
+    description: |
+      The date and time when the password reset token expires. Defaults to null. Used to set an expiration for password reset tokens.
+    type: [string, "null"]
+    format: date-time
+    example: '2025-06-15T10:00:00Z'
+  createdAt:
+    description: |
+      The date and time when the user account was created. Automatically set by the database.
+    type: string
+    format: date-time
+    readOnly: true
+    example: '2025-06-10T12:30:00Z'
+  updatedAt:
+    description: |
+      The date and time of the last update to the user account. Automatically updated by the database when any field changes.
+    type: string
+    format: date-time
+    readOnly: true
+    example: '2025-06-11T14:45:00Z'

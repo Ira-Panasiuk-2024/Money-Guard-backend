@@ -3,7 +3,7 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 
 import { getEnvVar } from './getEnvVar.js';
-import { NODEMAILER } from '../constants/index.js';
+import { NODEMAILER, EMAIL_TEMPLATES_DIR } from '../constants/index.js';
 
 const transporter = nodemailer.createTransport({
   host: getEnvVar(NODEMAILER.EMAIL_HOST),
@@ -16,11 +16,8 @@ const transporter = nodemailer.createTransport({
 });
 
 const readEmailTemplate = async (templateName, replacements = {}) => {
-  const templatePath = path.join(
-    process.cwd(),
-    'templates',
-    `${templateName}.html`,
-  );
+  const templatePath = path.join(EMAIL_TEMPLATES_DIR, `${templateName}.html`);
+
   let template = await fs.readFile(templatePath, 'utf8');
 
   for (const key in replacements) {

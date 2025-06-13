@@ -1,0 +1,36 @@
+tags:
+  - Auth
+summary: Verify user's email
+operationId: verifyEmail
+description: |
+  Verifies a user's email address using a provided verification token.
+  This endpoint is typically accessed by clicking a link sent to the user's email.
+security: []
+parameters:
+  - name: token
+    in: query
+    description: The unique verification token received via email.
+    required: true
+    schema:
+      type: string
+      example: 'some-random-verification-token-12345'
+responses:
+  '200':
+    description: Email successfully verified
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            success:
+              type: boolean
+              example: true
+            message:
+              type: string
+              example: Email successfully verified!
+  '400':
+    $ref: '../../components/responses/400.yaml'
+  '404':
+    $ref: '../../components/responses/404.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

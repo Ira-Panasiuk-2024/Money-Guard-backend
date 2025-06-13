@@ -10,6 +10,9 @@ export const CLOUDINARY = {
 };
 
 export const SWAGGER_PATH = path.join(process.cwd(), 'docs', 'swagger.json');
+
+export const EMAIL_TEMPLATES_DIR = path.join(process.cwd(), 'src', 'templates');
+
 export const TOKEN_VALID_UNTIL = 24 * 60 * 60 * 1000;
 
 export const NODEMAILER = {

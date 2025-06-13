@@ -33,6 +33,15 @@ paths:
   /auth/logout:
     post:
       $ref: ../swagger/path/auth/logout.yaml
+  /auth/verify:
+    get:
+      $ref: ../swagger/path/auth/verifyEmail.yaml
+  /auth/request-reset-password:
+    post:
+      $ref: ../swagger/path/auth/requestPasswordReset.yaml
+  /auth/reset-password:
+    post:
+      $ref: ../swagger/path/auth/resetPassword.yaml
 
   /users/current:
     get:
@@ -65,6 +74,10 @@ components:
       $ref: ../swagger/components/schemas/user.yaml
     transactions:
       $ref: ../swagger/components/schemas/transactions.yaml
+    categories:
+      $ref: ../swagger/components/schemas/categories.yaml
+    sessions:
+      $ref: ../swagger/components/schemas/sessions.yaml
   securitySchemes:
     bearerAuth:
       type: http

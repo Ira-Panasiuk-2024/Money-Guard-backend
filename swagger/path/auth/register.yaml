@@ -63,6 +63,9 @@ responses:
                   type: string
                   format: uri
                   example: null
+                isVerified:
+                  type: boolean
+                  example: false
             token:
               type: string
               example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'

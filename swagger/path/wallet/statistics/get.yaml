@@ -13,6 +13,7 @@ parameters:
     description: Four-digit year (e.g. 2024)
     schema:
       type: integer
+      minimum: 2022
       example: 2022
 
   - in: query
@@ -35,12 +36,15 @@ responses:
           required:
             - status
             - message
+            - period
             - totalBalance
             - periodIncomeOutcome
             - totalIncome
             - totalExpense
             - categoryExpenses
-            - periodTransactions
+            - categoryIncomes
+            - periodTransactionsSum
+            - periodTransactionsCount
           properties:
             status:
               type: integer
@@ -48,41 +52,67 @@ responses:
 
             message:
               type: string
-              example: 'Successfully found transactions for this period!'
+              example: 'Successfully found transactions for period ${period}!'
+
+            period:
+                type: string
+                description: The requested period in YYYY-MM format.
+                example: '2022-05'
 
             totalBalance:
               type: number
+              format: float
               description: User's current total balance.
-              example: 52000
+              example: 52000.00
 
             periodIncomeOutcome:
               type: number
+              format: float
               description: Net difference between income and expenses for the selected period.
-              example: 15250
+              example: 15250.00
 
             totalIncome:
               type: number
+              format: float
               description: Total income for the selected period.
-              example: 17000
+              example: 17000.00
 
             totalExpense:
               type: number
+              format: float
               description: Total expenses for the selected period.
-              example: 1751
+              example: 1751.45
 
             categoryExpenses:
-              type: object
-              additionalProperties:
-                type: number
-              description: Breakdown of expenses per category.
-              example:
-                'products': 350.50
-                'car': 1350.50
+                type: object
+                description: Breakdown of expenses per category, where keys are category names and values are sums.
+                additionalProperties:
+                  type: number
+                  format: float
+                example:
+                  'Products': 350.50
+                  'Car': 1350.50
 
-            periodTransactions:
-              type: number
-              description: Sum of all transactions (income + expenses) for the selected period
-              example: 18751
+            categoryIncomes:
+                type: object
+                description: Breakdown of incomes per category, where keys are category names and values are sums.
+                additionalProperties:
+                  type: number
+                  format: float
+                example:
+                  'Salary': 15000.00
+                  'Freelance': 2000.00
+
+            periodTransactionsSum:
+                type: number
+                format: float
+                description: Sum of all transactions (income + expenses) for the selected period.
+                example: 18751.00
+
+            periodTransactionsCount:
+                type: integer
+                description: Total number of transactions (income and expense) for the selected period.
+                example: 10
 
   '400':
     $ref: ../../../components/responses/400.yaml
