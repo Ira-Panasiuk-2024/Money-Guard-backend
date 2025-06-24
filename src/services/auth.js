@@ -25,6 +25,7 @@ export const createSession = async (userId, email) => {
 };
 
 export const findUserByEmail = (email) => UsersCollection.findOne({ email });
+
 export const findUserById = (id) => UsersCollection.findById(id);
 
 export const createUser = async (userData) => {
@@ -39,7 +40,7 @@ export const createUser = async (userData) => {
   });
 
   const verificationLink = `${getEnvVar(
-    'BASE_URL',
+    'FRONTEND_URL',
   )}/auth/verify?token=${verificationToken}`;
   await sendEmail(
     newUser.email,
