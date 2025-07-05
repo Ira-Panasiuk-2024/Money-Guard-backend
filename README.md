@@ -41,8 +41,8 @@
 - **State Management:** Redux Toolkit
 - **Routing:** React Router DOM
 - **HTTP Client:** Axios
-- **Forms:** Formik + Yup
-- **Visualization:** Chart.js / Recharts
+- **Forms:** React Hook Form + Yup
+- **Visualization:** Chart.js
 - **Icons:** React Icons
 - **Build Tool:** Vite
 - **Hosting:** Vercel
@@ -168,8 +168,8 @@ npm start
 - **Стан додатку:** Redux Toolkit
 - **Маршрутизація:** React Router DOM
 - **HTTP клієнт:** Axios
-- **Форми:** Formik + Yup
-- **Візуалізація:** Chart.js / Recharts
+- **Форми:** React Hook Form + Yup
+- **Візуалізація:** Chart.js
 - **Іконки:** React Icons
 - **Збирання:** Vite
 - **Хостинг:** Vercel
