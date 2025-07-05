@@ -70,9 +70,9 @@ paths:
 
 components:
   schemas:
-    user:
+    userPublic:
       $ref: ../swagger/components/schemas/userPublic.yaml
-    transactions:
+    transactionPublic:
       $ref: ../swagger/components/schemas/transactionPublic.yaml
     categories:
       $ref: ../swagger/components/schemas/categories.yaml
