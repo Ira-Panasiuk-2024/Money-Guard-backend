@@ -2,10 +2,11 @@ tags:
   - Transactions
 summary: Get user's transactions with pagination and sorting
 operationId: getTransactions
-description: Retrieve a paginated and sorted list of transactions for the authenticated user.
+description: |
+  Retrieve a paginated and sorted list of transactions for the authenticated user.
+  Allows filtering transactions by pages and sorting by date.
 security:
   - bearerAuth: []
-
 parameters:
   - in: query
     name: page
@@ -13,6 +14,7 @@ parameters:
     schema:
       type: integer
       minimum: 1
+      default: 1
       example: 1
   - in: query
     name: perPage
@@ -20,6 +22,7 @@ parameters:
     schema:
       type: integer
       minimum: 1
+      default: 8
       example: 10
   - in: query
     name: sortOrder
@@ -28,7 +31,7 @@ parameters:
       type: string
       enum: [asc, desc]
       default: desc
-
+      example: desc
 responses:
   '200':
     description: Successfully retrieved transactions
@@ -53,33 +56,7 @@ responses:
             transactions:
               type: array
               items:
-                properties:
-                  date:
-                    description: ISO 8601 formatted date of the transaction.
-                    type: string
-                    format: date-time
-                    example: '2025-04-01T00:00:00.000Z'
-                  type:
-                    description: Type of the transaction. Allowed values are 'income' or 'expense'.
-                    type: string
-                    enum: ['income', 'expense']
-                    example: income
-                    default: income
-                  categoryId:
-                    description: A valid MongoDB ObjectId representing the category of the transaction.
-                    type: string
-                    pattern: '^[0-9a-fA-F]{24}$'
-                    example: 680a680d4d3d230f60d30fc1
-                  sum:
-                    description: The amount of the transaction. Must be a positive number.
-                    type: number
-                    format: float
-                    example: 15423.6
-                  comment:
-                    description: Optional comment or note related to the transaction. Can be left empty.
-                    type: string
-                    example: Products in the supermarket
-                    default: ''
+                $ref: ../../../components/schemas/transactionPublic.yaml
 
             pageInfo:
               type: object
@@ -93,23 +70,29 @@ responses:
               properties:
                 page:
                   type: integer
+                  description: Current page number
                   example: 1
                 perPage:
                   type: integer
+                  description: Number of items per page
                   example: 8
                 totalItems:
                   type: integer
+                  description: Total number of transactions
                   example: 11
                 totalPages:
                   type: integer
+                  description: Total number of pages
                   example: 2
                 hasNextPage:
                   type: boolean
+                  description: Whether there is a next page
                   example: true
                 hasPreviousPage:
                   type: boolean
+                  description: Whether there is a previous page
                   example: false
   '401':
-    $ref: '../../../components/responses/401.yaml'
+    $ref: ../../../components/responses/401.yaml
   '500':
-    $ref: '../../../components/responses/500.yaml'
+    $ref: ../../../components/responses/500.yaml

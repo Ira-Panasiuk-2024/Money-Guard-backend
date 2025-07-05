@@ -71,13 +71,11 @@ paths:
 components:
   schemas:
     user:
-      $ref: ../swagger/components/schemas/user.yaml
+      $ref: ../swagger/components/schemas/userPublic.yaml
     transactions:
-      $ref: ../swagger/components/schemas/transactions.yaml
+      $ref: ../swagger/components/schemas/transactionPublic.yaml
     categories:
       $ref: ../swagger/components/schemas/categories.yaml
-    sessions:
-      $ref: ../swagger/components/schemas/sessions.yaml
   securitySchemes:
     bearerAuth:
       type: http

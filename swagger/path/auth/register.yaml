@@ -48,24 +48,7 @@ responses:
           properties:
             user:
               type: object
-              properties:
-                name:
-                  type: string
-                  example: 'John Doe'
-                email:
-                  type: string
-                  format: email
-                  example: 'johnd@gmail.com'
-                balance:
-                  type: number
-                  example: 0
-                photo:
-                  type: string
-                  format: uri
-                  example: null
-                isVerified:
-                  type: boolean
-                  example: false
+              $ref: '../../components/schemas/userPublic.yaml'
             token:
               type: string
               example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'

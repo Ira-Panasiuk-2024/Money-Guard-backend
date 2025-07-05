@@ -96,30 +96,7 @@
                   "properties": {
                     "user": {
                       "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string",
-                          "example": "John Doe"
-                        },
-                        "email": {
-                          "type": "string",
-                          "format": "email",
-                          "example": "johnd@gmail.com"
-                        },
-                        "balance": {
-                          "type": "number",
-                          "example": 0
-                        },
-                        "photo": {
-                          "type": "string",
-                          "format": "uri",
-                          "example": null
-                        },
-                        "isVerified": {
-                          "type": "boolean",
-                          "example": false
-                        }
-                      }
+                      "$ref": "#/components/schemas/userPublic"
                     },
                     "token": {
                       "type": "string",
@@ -192,30 +169,7 @@
                   "properties": {
                     "user": {
                       "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string",
-                          "example": "John Doe"
-                        },
-                        "email": {
-                          "type": "string",
-                          "format": "email",
-                          "example": "johnd@gmail.com"
-                        },
-                        "balance": {
-                          "type": "number",
-                          "example": 0
-                        },
-                        "photo": {
-                          "type": "string",
-                          "format": "uri",
-                          "example": "https://res.cloudinary.com/dlejcfotr/image/upload/v1743263889/cl4t7hdyrzxbzxhqeh5i.jpg"
-                        },
-                        "isVerified": {
-                          "type": "boolean",
-                          "example": false
-                        }
-                      }
+                      "$ref": "#/components/schemas/userPublic"
                     },
                     "token": {
                       "type": "string",
@@ -638,7 +592,7 @@
         ],
         "summary": "Get user's transactions with pagination and sorting",
         "operationId": "getTransactions",
-        "description": "Retrieve a paginated and sorted list of transactions for the authenticated user.",
+        "description": "Retrieve a paginated and sorted list of transactions for the authenticated user.\nAllows filtering transactions by pages and sorting by date.\n",
         "security": [
           {
             "bearerAuth": []
@@ -652,6 +606,7 @@
             "schema": {
               "type": "integer",
               "minimum": 1,
+              "default": 1,
               "example": 1
             }
           },
@@ -662,6 +617,7 @@
             "schema": {
               "type": "integer",
               "minimum": 1,
+              "default": 8,
               "example": 10
             }
           },
@@ -675,7 +631,8 @@
                 "asc",
                 "desc"
               ],
-              "default": "desc"
+              "default": "desc",
+              "example": "desc"
             }
           }
         ],
@@ -704,42 +661,7 @@
                     "transactions": {
                       "type": "array",
                       "items": {
-                        "properties": {
-                          "date": {
-                            "description": "ISO 8601 formatted date of the transaction.",
-                            "type": "string",
-                            "format": "date-time",
-                            "example": "2025-04-01T00:00:00.000Z"
-                          },
-                          "type": {
-                            "description": "Type of the transaction. Allowed values are 'income' or 'expense'.",
-                            "type": "string",
-                            "enum": [
-                              "income",
-                              "expense"
-                            ],
-                            "example": "income",
-                            "default": "income"
-                          },
-                          "categoryId": {
-                            "description": "A valid MongoDB ObjectId representing the category of the transaction.",
-                            "type": "string",
-                            "pattern": "^[0-9a-fA-F]{24}$",
-                            "example": "680a680d4d3d230f60d30fc1"
-                          },
-                          "sum": {
-                            "description": "The amount of the transaction. Must be a positive number.",
-                            "type": "number",
-                            "format": "float",
-                            "example": 15423.6
-                          },
-                          "comment": {
-                            "description": "Optional comment or note related to the transaction. Can be left empty.",
-                            "type": "string",
-                            "example": "Products in the supermarket",
-                            "default": ""
-                          }
-                        }
+                        "$ref": "#/components/schemas/transactionPublic"
                       }
                     },
                     "pageInfo": {
@@ -755,26 +677,32 @@
                       "properties": {
                         "page": {
                           "type": "integer",
+                          "description": "Current page number",
                           "example": 1
                         },
                         "perPage": {
                           "type": "integer",
+                          "description": "Number of items per page",
                           "example": 8
                         },
                         "totalItems": {
                           "type": "integer",
+                          "description": "Total number of transactions",
                           "example": 11
                         },
                         "totalPages": {
                           "type": "integer",
+                          "description": "Total number of pages",
                           "example": 2
                         },
                         "hasNextPage": {
                           "type": "boolean",
+                          "description": "Whether there is a next page",
                           "example": true
                         },
                         "hasPreviousPage": {
                           "type": "boolean",
+                          "description": "Whether there is a previous page",
                           "example": false
                         }
                       }
@@ -820,7 +748,7 @@
                   "date": {
                     "type": "string",
                     "format": "date-time",
-                    "description": "ISO 8601 formatted date of the transaction.",
+                    "description": "Date of the transaction in ISO 8601 format",
                     "example": "2025-04-01T00:00:00.000Z"
                   },
                   "type": {
@@ -829,8 +757,8 @@
                       "income",
                       "expense"
                     ],
-                    "default": "income",
-                    "description": "Type of the transaction. Must be either 'income' or 'expense'.",
+                    "default": "expense",
+                    "description": "Type of transaction - 'income' for money received or 'expense' for money spent.",
                     "example": "income"
                   },
                   "categoryId": {
@@ -844,7 +772,7 @@
                     "format": "float",
                     "minimum": 0.01,
                     "description": "Positive numeric value representing the transaction amount.",
-                    "example": 15423.6
+                    "example": 15423.67
                   },
                   "comment": {
                     "type": "string",
@@ -881,42 +809,7 @@
                     },
                     "transaction": {
                       "type": "object",
-                      "properties": {
-                        "date": {
-                          "description": "ISO 8601 formatted date of the transaction.",
-                          "type": "string",
-                          "format": "date-time",
-                          "example": "2025-04-01T00:00:00.000Z"
-                        },
-                        "type": {
-                          "description": "Type of the transaction. Allowed values are 'income' or 'expense'.",
-                          "type": "string",
-                          "enum": [
-                            "income",
-                            "expense"
-                          ],
-                          "example": "income",
-                          "default": "income"
-                        },
-                        "categoryId": {
-                          "description": "A valid MongoDB ObjectId representing the category of the transaction.",
-                          "type": "string",
-                          "pattern": "^[0-9a-fA-F]{24}$",
-                          "example": "680a680d4d3d230f60d30fc1"
-                        },
-                        "sum": {
-                          "description": "The amount of the transaction. Must be a positive number.",
-                          "type": "number",
-                          "format": "float",
-                          "example": 15423.6
-                        },
-                        "comment": {
-                          "description": "Optional comment or note related to the transaction. Can be left empty.",
-                          "type": "string",
-                          "example": "Products in the supermarket",
-                          "default": ""
-                        }
-                      }
+                      "$ref": "#/components/schemas/transactionPublic"
                     },
                     "balance": {
                       "type": "number",
@@ -1378,172 +1271,10 @@
   "components": {
     "schemas": {
       "user": {
-        "type": "object",
-        "required": [
-          "_id",
-          "name",
-          "email",
-          "password",
-          "isVerified"
-        ],
-        "properties": {
-          "_id": {
-            "description": "A unique ID for the user in the database. Automatically generated when the user is created.\n",
-            "type": "string",
-            "example": "67cd81343b84f810f27e521f"
-          },
-          "name": {
-            "description": "The user's full name. Must contain only letters (Latin characters), with a minimum of 3 and a maximum of 20 characters. Special characters and numbers are not allowed. This field is required for registration.\n",
-            "type": "string",
-            "minLength": 2,
-            "maxLength": 20,
-            "example": "John Doe"
-          },
-          "email": {
-            "description": "The user's email address, used as a unique login credential. Must be a valid email format and no more than 64 characters long. This field is required for both registration and login.\n",
-            "type": "string",
-            "format": "email",
-            "maxLength": 64,
-            "example": "example@mail.com"
-          },
-          "password": {
-            "description": "The user's password. Must be between 6 and 20 characters. It must include at least:\n- one uppercase letter,\n- one lowercase letter,\n- one number,\n- one special character (!@#$%^&* etc).\nShould not contain whitespace. Required for account creation.\n",
-            "type": "string",
-            "minLength": 6,
-            "maxLength": 20,
-            "example": "pCVVJHbCsY57"
-          },
-          "balance": {
-            "description": "The user's current financial balance represented as a number. This field is optional and defaults to 0.\nThe balance can be updated through transactions, displayed on the user's dashboard or profile page to show their current available balance in real-time.\n",
-            "type": "number",
-            "default": 0,
-            "example": 0
-          },
-          "photo": {
-            "description": "Optional URL to the user's profile photo. May be null. If provided, must be a valid image URL\nand can be used to personalize the user's profile page.\n",
-            "type": "string",
-            "format": "uri",
-            "example": "https://res.cloudinary.com/dlejcfotr/image/upload/v1743263889/cl4t7hdyrzxbzxhqeh5i.jpg"
-          },
-          "isVerified": {
-            "description": "The verification status of the user's account. Defaults to false. Indicates whether the user has confirmed their email address.\n",
-            "type": "boolean",
-            "default": false,
-            "example": false
-          },
-          "verificationToken": {
-            "description": "A token used for email verification. Generated upon registration and used to confirm the account. Defaults to null.\n",
-            "type": [
-              "string",
-              "null"
-            ],
-            "example": "some-random-verification-token-12345"
-          },
-          "resetToken": {
-            "description": "A token used for password reset. Generated upon request for a password reset. Defaults to null.\n",
-            "type": [
-              "string",
-              "null"
-            ],
-            "example": "some-random-reset-token-67890"
-          },
-          "resetTokenExpires": {
-            "description": "The date and time when the password reset token expires. Defaults to null. Used to set an expiration for password reset tokens.\n",
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time",
-            "example": "2025-06-15T10:00:00Z"
-          },
-          "createdAt": {
-            "description": "The date and time when the user account was created. Automatically set by the database.\n",
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "example": "2025-06-10T12:30:00Z"
-          },
-          "updatedAt": {
-            "description": "The date and time of the last update to the user account. Automatically updated by the database when any field changes.\n",
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "example": "2025-06-11T14:45:00Z"
-          }
-        }
+        "$ref": "#/components/schemas/userPublic"
       },
       "transactions": {
-        "type": "object",
-        "required": [
-          "_id",
-          "userId",
-          "date",
-          "type",
-          "categoryId",
-          "sum"
-        ],
-        "properties": {
-          "_id": {
-            "description": "A unique ID for the transaction in the database. Automatically generated when the transaction is created.\n",
-            "type": "string",
-            "example": "67cece57cf044b5afacf7749"
-          },
-          "userId": {
-            "description": "A required reference to the user who owns this resource. Must be a valid MongoDB ObjectId string corresponding to an existing user.\n",
-            "type": "string",
-            "format": "objectId",
-            "pattern": "^[0-9a-fA-F]{24}$",
-            "example": "67cd81343b84f810f27e521f"
-          },
-          "date": {
-            "description": "ISO 8601 formatted date of the transaction.",
-            "type": "string",
-            "format": "date-time",
-            "example": "2025-04-01T00:00:00.000Z"
-          },
-          "type": {
-            "description": "Type of the transaction. Allowed values are 'income' or 'expense'.",
-            "type": "string",
-            "enum": [
-              "income",
-              "expense"
-            ],
-            "example": "income",
-            "default": "income"
-          },
-          "categoryId": {
-            "description": "A valid MongoDB ObjectId representing the category of the transaction.",
-            "type": "string",
-            "pattern": "^[0-9a-fA-F]{24}$",
-            "example": "680a680d4d3d230f60d30fc1"
-          },
-          "sum": {
-            "description": "The amount of the transaction. Must be a positive number.",
-            "type": "number",
-            "format": "float",
-            "example": 15423.6
-          },
-          "comment": {
-            "description": "Optional comment or note related to the transaction. Can be left empty.",
-            "type": "string",
-            "example": "Products in the supermarket",
-            "default": ""
-          },
-          "createdAt": {
-            "description": "The date and time when the transaction was created. Automatically set by the database.\n",
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "example": "2025-06-10T12:00:00Z"
-          },
-          "updatedAt": {
-            "description": "The date and time of the last update to the transaction. Automatically updated by the database when any field changes.\n",
-            "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "example": "2025-06-11T13:45:00Z"
-          }
-        }
+        "$ref": "#/components/schemas/transactionPublic"
       },
       "categories": {
         "type": "object",
@@ -1590,52 +1321,120 @@
           }
         }
       },
-      "sessions": {
+      "userPublic": {
         "type": "object",
         "required": [
           "_id",
-          "userId",
-          "token",
-          "tokenValidUntil"
+          "name",
+          "email"
         ],
         "properties": {
           "_id": {
-            "description": "A unique ID for the session in the database. Automatically generated MongoDB ObjectId.\n",
+            "description": "A unique ID for the user in the database.\n",
             "type": "string",
-            "pattern": "^[0-9a-fA-F]{24}$",
-            "example": "67d1c3e4f5a6b7c8d9e0f123"
+            "format": "objectId",
+            "example": "67cd81343b84f810f27e521f"
           },
-          "userId": {
-            "description": "The ID of the user associated with this session. Must be a valid MongoDB ObjectId corresponding to an existing user.\n",
+          "name": {
+            "description": "The user's full name.\n",
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 20,
+            "example": "John Doe"
+          },
+          "email": {
+            "description": "The user's email address.\n",
+            "type": "string",
+            "format": "email",
+            "maxLength": 64,
+            "example": "example@mail.com"
+          },
+          "balance": {
+            "description": "The user's email address.\n",
+            "type": "number",
+            "format": "float",
+            "default": 0,
+            "example": 1250.5
+          },
+          "photo": {
+            "description": "Optional URL to the user's profile photo. May be null.\n",
+            "type": "string",
+            "format": "uri",
+            "example": "https://res.cloudinary.com/dlejcfotr/image/upload/v1743263889/cl4t7hdyrzxbzxhqeh5i.jpg"
+          },
+          "isVerified": {
+            "description": "The verification status of the user's account. Defaults to false. Indicates whether the user has confirmed their email address.\n",
+            "type": "boolean",
+            "default": false,
+            "example": true
+          },
+          "createdAt": {
+            "description": "The date and time when the user account was created. Automatically set by the database.\n",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "example": "2025-06-10T12:30:00Z"
+          },
+          "updatedAt": {
+            "description": "The date and time of the last update to the user account. Automatically updated by the database when any field changes.\n",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "example": "2025-06-11T14:45:00Z"
+          }
+        }
+      },
+      "transactionPublic": {
+        "type": "object",
+        "required": [
+          "_id",
+          "date",
+          "type",
+          "categoryId",
+          "sum"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Unique identifier for the transaction in the database. Automatically generated when the transaction is created.\n",
             "type": "string",
             "format": "objectId",
             "pattern": "^[0-9a-fA-F]{24}$",
-            "example": "67cd81343b84f810f27e521f"
+            "example": "67cece57cf044b5afacf7749"
           },
-          "token": {
-            "description": "The unique authentication token for this session. This token is used by clients to authenticate requests to protected resources.\n",
-            "type": "string",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2NkODEzNDNiODRmODEwZjI3ZTUyMWYiLCJpYXQiOjE3MDExMjIzODksImV4cCI6MTcwMTEyNTk4OX0.some_jwt_signature_here"
-          },
-          "tokenValidUntil": {
-            "description": "The date and time when this session token becomes invalid. This is used to manage session expiration.\n",
+          "date": {
+            "description": "Date when the transaction occurred, formatted as ISO 8601 datetime string.\n",
             "type": "string",
             "format": "date-time",
-            "example": "2025-06-15T18:00:00Z"
+            "example": "2025-04-01T00:00:00.000Z"
           },
-          "createdAt": {
-            "description": "The date and time when the session was created. Automatically set by the database.\n",
+          "type": {
+            "description": "Type of transaction indicating whether it's money coming in or going out.\n'income' represents money received, 'expense' represents money spent.\n",
             "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "example": "2025-06-10T12:00:00Z"
+            "enum": [
+              "income",
+              "expense"
+            ],
+            "example": "income",
+            "default": "expense"
           },
-          "updatedAt": {
-            "description": "The date and time of the last update to the session. Automatically updated by the database when any field changes.\n",
+          "categoryId": {
+            "description": "Valid MongoDB ObjectId representing the category of this transaction\n(e.g., car, products, salary, investments, etc.)\n",
             "type": "string",
-            "format": "date-time",
-            "readOnly": true,
-            "example": "2025-06-10T12:00:00Z"
+            "pattern": "^[0-9a-fA-F]{24}$",
+            "example": "680a680d4d3d230f60d30fc1"
+          },
+          "sum": {
+            "description": "The monetary amount of the transaction. Must be a positive number.\n",
+            "type": "number",
+            "format": "float",
+            "minimum": 0.01,
+            "example": 15423.6
+          },
+          "comment": {
+            "description": "Optional note or description about the transaction. Can provide additional\ncontext about the purchase or financial operation.\n",
+            "type": "string",
+            "example": "Grocery shopping at supermarket",
+            "default": ""
           }
         }
       }
@@ -1824,7 +1623,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "The user already exists. Please try another one."
+                      "example": "Resource conflict occurred"
                     }
                   }
                 }

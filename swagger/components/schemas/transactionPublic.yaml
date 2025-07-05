@@ -1,7 +1,6 @@
 type: object
 required:
   - _id
-  - userId
   - date
   - type
   - categoryId
@@ -14,13 +13,6 @@ properties:
     format: objectId
     pattern: '^[0-9a-fA-F]{24}$'
     example: 67cece57cf044b5afacf7749
-  userId:
-    description: |
-      Unique identifier for the transaction in the database. Automatically generated when the transaction is created.
-    type: string
-    format: objectId
-    pattern: '^[0-9a-fA-F]{24}$'
-    example: 67cd81343b84f810f27e521f
   date:
     description: |
       Date when the transaction occurred, formatted as ISO 8601 datetime string.
@@ -56,19 +48,3 @@ properties:
     type: string
     example: 'Grocery shopping at supermarket'
     default: ''
-  createdAt:
-    description: |
-      Timestamp when the transaction record was created in the database.
-      Automatically set by the system and cannot be modified.
-    type: string
-    format: date-time
-    readOnly: true
-    example: '2025-06-10T12:00:00Z'
-  updatedAt:
-    description: |
-      Timestamp of the last modification to the transaction record.
-      Automatically updated by the system whenever any field is changed.
-    type: string
-    format: date-time
-    readOnly: true
-    example: '2025-06-11T13:45:00Z'

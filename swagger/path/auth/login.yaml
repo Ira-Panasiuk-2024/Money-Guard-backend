@@ -39,24 +39,7 @@ responses:
           properties:
             user:
               type: object
-              properties:
-                name:
-                  type: string
-                  example: 'John Doe'
-                email:
-                  type: string
-                  format: email
-                  example: 'johnd@gmail.com'
-                balance:
-                  type: number
-                  example: 0
-                photo:
-                  type: string
-                  format: uri
-                  example: 'https://res.cloudinary.com/dlejcfotr/image/upload/v1743263889/cl4t7hdyrzxbzxhqeh5i.jpg'
-                isVerified:
-                  type: boolean
-                  example: false
+              $ref: '../../components/schemas/userPublic.yaml'
             token:
               type: string
               example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
