@@ -105,13 +105,71 @@
 
 ## 🏗 Installation & Setup
 
+### Environment Variables
+
+Before running the application, you need to set up the following environment variables:
+
+#### Backend (.env)
+
+```env
+PORT=
+MONGODB_USER=
+MONGODB_PASSWORD=
+MONGODB_URL=
+MONGODB_DB=
+JWT_SECRET=
+APP_DOMAIN=
+CLOUD_NAME=
+API_KEY=
+API_SECRET=
+ENABLE_CLOUDINARY=
+EMAIL_USER=
+EMAIL_PASS=
+EMAIL_HOST=
+EMAIL_PORT=
+BASE_URL=
+FRONTEND_URL=
+```
+
+**Environment Variables Description:**
+- `PORT` - Server port number
+- `MONGODB_USER` - MongoDB database username
+- `MONGODB_PASSWORD` - MongoDB database password
+- `MONGODB_URL` - MongoDB connection URL
+- `MONGODB_DB` - MongoDB database name
+- `JWT_SECRET` - Secret key for JWT token generation
+- `APP_DOMAIN` - Application domain name
+- `CLOUD_NAME` - Cloudinary cloud name for image storage
+- `API_KEY` - Cloudinary API key
+- `API_SECRET` - Cloudinary API secret
+- `ENABLE_CLOUDINARY` - Enable/disable Cloudinary service
+- `EMAIL_USER` - Email service username (Gmail address)
+- `EMAIL_PASS` - Email service password (App Password from Gmail)
+- `EMAIL_HOST` - Email service host
+- `EMAIL_PORT` - Email service port
+- `BASE_URL` - Backend base URL
+- `FRONTEND_URL` - Frontend application URL
+
+#### Frontend (.env)
+
+```env
+VITE_API_URL=
+```
+
+**Environment Variables Description:**
+- `VITE_API_URL` - Backend API base URL
+
 ### Frontend Setup
 
 ```bash
 git clone https://github.com/Ira-Panasiuk-2024/Money-Guard-frontend.git
 cd Money-Guard-frontend
 npm install
+npm run dev
+npm run build
+npm run preview
 npm start
+
 ```
 
 ### Backend Setup
@@ -120,6 +178,7 @@ npm start
 git clone https://github.com/Ira-Panasiuk-2024/Money-Guard-backend.git
 cd Money-Guard-backend
 npm install
+npm run dev
 npm start
 ```
 
@@ -232,12 +291,69 @@ npm start
 
 ## 🏗 Встановлення та налаштування
 
+### Змінні оточення
+
+Перед запуском додатку необхідно налаштувати наступні змінні оточення:
+
+#### Бекенд (.env)
+
+```env
+PORT=
+MONGODB_USER=
+MONGODB_PASSWORD=
+MONGODB_URL=
+MONGODB_DB=
+JWT_SECRET=
+APP_DOMAIN=
+CLOUD_NAME=
+API_KEY=
+API_SECRET=
+ENABLE_CLOUDINARY=
+EMAIL_USER=
+EMAIL_PASS=
+EMAIL_HOST=
+EMAIL_PORT=
+BASE_URL=
+FRONTEND_URL=
+```
+
+**Опис змінних оточення:**
+- `PORT` - Номер порту сервера
+- `MONGODB_USER` - Ім'я користувача бази даних MongoDB
+- `MONGODB_PASSWORD` - Пароль бази даних MongoDB
+- `MONGODB_URL` - URL підключення до MongoDB
+- `MONGODB_DB` - Назва бази даних MongoDB
+- `JWT_SECRET` - Секретний ключ для генерації JWT токенів
+- `APP_DOMAIN` - Доменне ім'я додатку
+- `CLOUD_NAME` - Назва хмарного сховища Cloudinary
+- `API_KEY` - API ключ Cloudinary
+- `API_SECRET` - API секрет Cloudinary
+- `ENABLE_CLOUDINARY` - Увімкнути/вимкнути сервіс Cloudinary
+- `EMAIL_USER` - Ім'я користувача поштової служби (Gmail адреса)
+- `EMAIL_PASS` - Пароль поштової служби (App Password від Gmail)
+- `EMAIL_HOST` - Хост поштової служби
+- `EMAIL_PORT` - Порт поштової служби
+- `BASE_URL` - Базова URL бекенду
+- `FRONTEND_URL` - URL фронтенд додатку
+
+#### Фронтенд (.env)
+
+```env
+VITE_API_URL=
+```
+
+**Опис змінних оточення:**
+- `VITE_API_URL` - Базова URL бекенд API
+
 ### Налаштування фронтенду
 
 ```bash
 git clone https://github.com/Ira-Panasiuk-2024/Money-Guard-frontend.git
 cd Money-Guard-frontend
 npm install
+npm run dev
+npm run build
+npm run preview
 npm start
 ```
 
@@ -247,6 +363,7 @@ npm start
 git clone https://github.com/Ira-Panasiuk-2024/Money-Guard-backend.git
 cd Money-Guard-backend
 npm install
+npm run dev
 npm start
 ```
 
